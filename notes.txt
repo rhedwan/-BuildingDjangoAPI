@@ -1,2 +1,4 @@
 1. By Default the api_view() takes a "GET" request.
-2. 
+2. 'PUT' request means updating for ALL field available
+3. 'PACHT' request means updating for ONLY ONE field available
+4. 
