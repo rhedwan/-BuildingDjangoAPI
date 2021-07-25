@@ -1,0 +1,2 @@
+1. By Default the api_view() takes a "GET" request.
+2. 
