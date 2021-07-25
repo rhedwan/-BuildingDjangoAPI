@@ -53,4 +53,6 @@ def movie_details(request, pk):
 """  
 1. It is also very important to pass the id of item to be updated, when making a "PUT" request
 else a new model get created.
+2. The data we are using after checking it "is_vald()" is from the return statement
+in create method in the MovieSerializer
 """
