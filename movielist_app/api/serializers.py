@@ -1,8 +1,28 @@
-from re import escape
 from movielist_app.models import Movie
 from rest_framework import serializers
 
-def name_length(value):
+
+class MovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = '__all__'
+        # fields = ['id', 'name', 'description']
+        # exclude = ['active']
+
+    def validate(self, data):
+        if data['name'] == data['description']:
+            raise serializers.ValidationError("Title and description should be different")
+        return data
+
+    def validate_name(self, value):
+        if len(value) < 2:
+            raise serializers.ValidationError("Name is too short")
+        else:
+            return value
+
+
+
+""" def name_length(value):
     if len(value) < 2:
         raise serializers.ValidationError("Name is too short")
 
@@ -30,13 +50,13 @@ class MovieSerializer(serializers.Serializer):
             raise serializers.ValidationError("Title and description should be different")
         return data
 
-    """ def validate_name(self, value):
-        if len(value) < 2:
-            raise serializers.ValidationError("Name is too short")
-        else:
-            return value """
+    # def validate_name(self, value):
+    #     if len(value) < 2:
+    #         raise serializers.ValidationError("Name is too short")
+    #     else:
+    #         return value
 
-
+ """
 
   
 
@@ -60,4 +80,8 @@ a individual field.
 LINKS: https://www.django-rest-framework.org/api-guide/fields/
 6. This is the Core arugment for serailizers i.e the EmailField, CharField, Boolean,
 IP Address field etc 
+
+LINKS:  https://www.django-rest-framework.org/api-guide/serializers/#modelserializer
+7. The exclude save the listing a specified fields
+8. The fields take both list,[] and tuple,() i.e ('id', 'name', 'description')
 """
