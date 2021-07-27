@@ -56,4 +56,8 @@ a particular field.
 and comparing field in that model.
 5. The 'name_length' is a function it is a Validators. It is used for checking
 a individual field. 
+
+LINKS: https://www.django-rest-framework.org/api-guide/fields/
+6. This is the Core arugment for serailizers i.e the EmailField, CharField, Boolean,
+IP Address field etc 
 """
