@@ -3,11 +3,18 @@ from rest_framework import serializers
 
 
 class MovieSerializer(serializers.ModelSerializer):
+
+    len_name = serializers.SerializerMethodField()
+
     class Meta:
         model = Movie
         fields = '__all__'
         # fields = ['id', 'name', 'description']
         # exclude = ['active']
+
+    def get_len_name(self, object):
+        length = len(object.name)
+        return length
 
     def validate(self, data):
         if data['name'] == data['description']:
@@ -84,4 +91,9 @@ IP Address field etc
 LINKS:  https://www.django-rest-framework.org/api-guide/serializers/#modelserializer
 7. The exclude save the listing a specified fields
 8. The fields take both list,[] and tuple,() i.e ('id', 'name', 'description')
+
+Custom Serializers Fields
+LINKS: https://www.django-rest-framework.org/api-guide/fields/#serializermethodfield
+9. "get_len_name" is the custom method for accesing the models in the database.
+10. The "object" has access to everything in the database model field.
 """
