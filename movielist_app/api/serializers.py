@@ -3,11 +3,6 @@ from django.db.models import fields
 from movielist_app.models import WatchList , StreamPlatform
 from rest_framework import serializers
 
-class StreamPlatformSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = StreamPlatform
-        fields = '__all__'
 
 class WatchListSerializer(serializers.ModelSerializer):
 
@@ -18,6 +13,12 @@ class WatchListSerializer(serializers.ModelSerializer):
         # exclude = ['active']
 
     
+class StreamPlatformSerializer(serializers.ModelSerializer):
+    watchlist = WatchListSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = StreamPlatform
+        fields = '__all__'
 
 
 """ def name_length(value):
@@ -87,4 +88,8 @@ Custom Serializers Fields
 LINKS: https://www.django-rest-framework.org/api-guide/fields/#serializermethodfield
 9. "get_len_name" is the custom method for accesing the models in the database.
 10. The "object" has access to everything in the database model field.
+
+LINKS: https://www.django-rest-framework.org/api-guide/relations/#nested-relationships
+11. The class attribute 'watchlist' is from the related_name set in the model.
+12. Many is set to 'True' because it A Streaming platform can have many/severals video attached to it.
 """
