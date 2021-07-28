@@ -14,15 +14,8 @@ class WatchListSerializer(serializers.ModelSerializer):
         # exclude = ['active']
 
     
-class StreamPlatformSerializer(serializers.ModelSerializer):
-    # watchlist = WatchListSerializer(many=True, read_only=True)
-    # watchlist = serializers.StringRelatedField(many=True)
-    # watchlist = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    watchlist = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='movie-detail'
-    )
+class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
+    watchlist = WatchListSerializer(many=True, read_only=True)
 
     class Meta:
         model = StreamPlatform
@@ -121,4 +114,20 @@ LINKS: https://www.django-rest-framework.org/api-guide/relations/#hyperlinkedrel
     )"
 This return the links of each movies associated with it. Where "'movie-detail'" is the url name in the urls.py.
 Also, the "context={'request': request}" must be passed into the "StreamPlatformSerializer" class in the view.
+
+"   watchlist = serializers.StringRelatedField(many=True)
+    watchlist = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    watchlist = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='movie-detail')
+"
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< HyperlinkedModelSerializer  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+LINKS: https://www.django-rest-framework.org/api-guide/serializers/#hyperlinkedmodelserializer
+17. The "HyperlinkedModelSerializer" uses the "url" while  the "ModelSerializer" uses the "id"
+18. Also, the "context={'request': request}" must be passed into the "StreamPlatformSerializer" class in the views.py 
+for the lising of each stream platform.
+19. Also, the "context={'request': request}" must be passed into the "StreamPlatformDetailAV" class in the views.py
+for the clicking of each stream platform to work.
+
 """
