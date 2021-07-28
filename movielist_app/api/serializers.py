@@ -1,3 +1,4 @@
+from re import T
 from django.db import models
 from django.db.models import fields
 from movielist_app.models import WatchList , StreamPlatform
@@ -14,7 +15,14 @@ class WatchListSerializer(serializers.ModelSerializer):
 
     
 class StreamPlatformSerializer(serializers.ModelSerializer):
-    watchlist = WatchListSerializer(many=True, read_only=True)
+    # watchlist = WatchListSerializer(many=True, read_only=True)
+    # watchlist = serializers.StringRelatedField(many=True)
+    # watchlist = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    watchlist = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='movie-detail'
+    )
 
     class Meta:
         model = StreamPlatform
@@ -89,7 +97,28 @@ LINKS: https://www.django-rest-framework.org/api-guide/fields/#serializermethodf
 9. "get_len_name" is the custom method for accesing the models in the database.
 10. The "object" has access to everything in the database model field.
 
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< SERIALIZERS RELATIONS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
 LINKS: https://www.django-rest-framework.org/api-guide/relations/#nested-relationships
 11. The class attribute 'watchlist' is from the related_name set in the model.
 12. Many is set to 'True' because it A Streaming platform can have many/severals video attached to it.
+13. The "WatchListSerializer(many=True, read_only=True)" returns all the fields of the models associated with it.
+i.e It returns all the attribute/fields of the video.
+
+LINKS: https://www.django-rest-framework.org/api-guide/relations/#stringrelatedfield
+14. "serializers.StringRelatedField(many=True)" returns the string representations "__str__"
+
+LINKS: https://www.django-rest-framework.org/api-guide/relations/#primarykeyrelatedfield
+15. "serializers.PrimaryKeyRelatedField(many=True, read_only=True)" returns the pk or id of the movie assocaited with it.
+
+LINKS: https://www.django-rest-framework.org/api-guide/relations/#hyperlinkedrelatedfield
+16. "serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='movie-detail'
+    )"
+This return the links of each movies associated with it. Where "'movie-detail'" is the url name in the urls.py.
+Also, the "context={'request': request}" must be passed into the "StreamPlatformSerializer" class in the view.
 """
