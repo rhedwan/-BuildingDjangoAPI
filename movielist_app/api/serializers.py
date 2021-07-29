@@ -1,11 +1,15 @@
-from re import T
-from django.db import models
-from django.db.models import fields
-from movielist_app.models import WatchList , StreamPlatform
+from movielist_app.models import WatchList , StreamPlatform , Review
 from rest_framework import serializers
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
 
 
 class WatchListSerializer(serializers.ModelSerializer):
+
+    reviews = ReviewSerializer(many=True, read_only=True)
 
     class Meta:
         model = WatchList
@@ -130,4 +134,6 @@ for the lising of each stream platform.
 19. Also, the "context={'request': request}" must be passed into the "StreamPlatformDetailAV" class in the views.py
 for the clicking of each stream platform to work.
 
+20. The 'reviews' attribute in the 'WatchListSerializer' it is from the 'related name' in the 'Review Model' of the watchlist
+field. It for getting all  the reviews associated with a movie.
 """
