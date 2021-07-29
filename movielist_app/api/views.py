@@ -10,6 +10,13 @@ from rest_framework import generics
 from movielist_app.models import WatchList , StreamPlatform , Review
 from movielist_app.api.serializers import WatchListSerializer , StreamPlatformSerializer,ReviewSerializer
 
+class ReviewDetail(mixins.RetrieveModelMixin, generics.GenericAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
 class ReviewList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
 
     queryset = Review.objects.all()
@@ -164,4 +171,6 @@ LINKS: https://www.django-rest-framework.org/api-guide/generic-views/#listmodelm
 it implements creating and saving a new model instance
 
 5. 'generics.GenericAPIView' is used for building the 2 
+NOTE: The the mixins subclasses go in hand with the 'generics.GenericAPIView'
+
 """
