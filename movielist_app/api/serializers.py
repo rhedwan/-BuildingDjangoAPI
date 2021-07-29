@@ -19,7 +19,7 @@ class WatchListSerializer(serializers.ModelSerializer):
         # exclude = ['active']
 
     
-class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
+class StreamPlatformSerializer(serializers.ModelSerializer):
     watchlist = WatchListSerializer(many=True, read_only=True)
 
     class Meta:
@@ -137,4 +137,9 @@ for the clicking of each stream platform to work.
 
 20. The 'reviews' attribute in the 'WatchListSerializer' it is from the 'related name' in the 'Review Model' of the watchlist
 field. It for getting all  the reviews associated with a movie.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< NOTES HyperlinkedModelSerializer  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+21. The 'HyperlinkedModelSerializer'  was removed because it going to cause laoding issues if the 'context={'request': request}'
+is not passed on instantiating the 'serializers class' in the 'views class'
+
 """

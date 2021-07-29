@@ -1,17 +1,25 @@
-from django.urls.conf import path
+from django.urls import include, path
 
 # NB: function based view
 # from movielist_app.api.views import movie_list, movie_details
+from movielist_app.api.views import WatchListAV, WatchDetailAV, StreamPlatformListAV , StreamPlatformDetailAV, StreamPlatformVS, ReviewList, ReviewDetail, ReviewCreate
 
-from movielist_app.api.views import WatchListAV, WatchDetailAV, StreamPlatformListAV , StreamPlatformDetailAV, ReviewList, ReviewDetail, ReviewCreate
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('stream', StreamPlatformVS, basename='streamplatform')
+
 
 urlpatterns = [
     # path('list/', movie_list, name='movie_list'),
     # path('<int:pk>/', movie_details, name='movie_detail'),
-    path('list/', WatchListAV.as_view(), name='movie_list'),
+    path('list/', WatchListAV.as_view(), name='movie-list'),
     path('<int:pk>/', WatchDetailAV.as_view(), name='movie-detail'),
-    path('stream/', StreamPlatformListAV.as_view(), name='stream'),
-    path('stream/<int:pk>/', StreamPlatformDetailAV.as_view(), name='streamplatform-detail'),
+
+    path('', include(router.urls)),
+
+    # path('stream/', StreamPlatformListAV.as_view(), name='stream-list'),
+    # path('stream/<int:pk>/', StreamPlatformDetailAV.as_view(), name='streamplatform-detail'),
     
     # path('review/', ReviewList.as_view(), name='review'),
     # path('review/<int:pk>/', ReviewDetail.as_view(), name='review-detail'),

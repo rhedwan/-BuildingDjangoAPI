@@ -6,7 +6,8 @@ from rest_framework.views import APIView
 
 # from rest_framework import mixins
 from rest_framework import generics
-
+from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
 from movielist_app.models import WatchList , StreamPlatform , Review
 from movielist_app.api.serializers import WatchListSerializer , StreamPlatformSerializer,ReviewSerializer
 
@@ -46,6 +47,19 @@ class ReviewList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Generi
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs) """
+
+class StreamPlatformVS(viewsets.ViewSet):
+
+    def list(self, request):
+        queryset = StreamPlatform.objects.all()
+        serializer = StreamPlatformSerializer(queryset, many=True )
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = StreamPlatform.objects.all()
+        watchlist = get_object_or_404(queryset, pk=pk)
+        serializer = StreamPlatformSerializer(watchlist)
+        return Response(serializer.data)
 
 class StreamPlatformListAV(APIView):
 
@@ -204,4 +218,13 @@ it is use here for saving the 'watchlist' id. i.e the id/pk of the video which w
 NOTE: The to avoid errors the "fields = '__all__'" needs to exclude the watchlist, hence: "exclude = ['watchlist']"
 
 8. 'watchlist' variable in the 'perform_create(self, serializer)' is for getting the id of the videos(i.e the /<int:pk>/ in endpoint) 
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ViewSets & Routers  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+LINKS: https://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/,
+https://www.django-rest-framework.org/api-guide/viewsets/#viewset
+
+9. The 'ViewSets & Routers' saves a lot of energy by creating our urls for us automatically. Depending on the methods available in it.
+
 """
