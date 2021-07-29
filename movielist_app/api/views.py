@@ -10,6 +10,13 @@ from rest_framework import generics
 from movielist_app.models import WatchList , StreamPlatform , Review
 from movielist_app.api.serializers import WatchListSerializer , StreamPlatformSerializer,ReviewSerializer
 
+class ReviewCreate(generics.CreateAPIView):
+    serializer_class = ReviewSerializer
+    def perform_create(self, serializer):
+        pk = self.kwargs.get('pk')
+        watchlist = WatchList.objects.get(pk=pk)
+        serializer.save(watchlist = watchlist)
+
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
@@ -190,4 +197,11 @@ https://www.django-rest-framework.org/api-guide/generic-views/#concrete-view-cla
 6. The Concrete View Classes (i.e using the generics only) are inherited from the 'mixins' Classes.
 READ MORE: https://github.com/encode/django-rest-framework/blob/master/rest_framework/generics.py
 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< SAVING OF REVIEW FOR A VIDEO INNSTANCE /Overwriting Querset  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+LINKS: https://www.django-rest-framework.org/api-guide/generic-views/#api-reference
+7. 'perform_create(self, serializer)' method is Called by CreateModelMixin when saving a new object instance.
+it is use here for saving the 'watchlist' id. i.e the id/pk of the video which we are creating the review for.
+NOTE: The to avoid errors the "fields = '__all__'" needs to exclude the watchlist, hence: "exclude = ['watchlist']"
+
+8. 'watchlist' variable in the 'perform_create(self, serializer)' is for getting the id of the videos(i.e the /<int:pk>/ in endpoint) 
 """
