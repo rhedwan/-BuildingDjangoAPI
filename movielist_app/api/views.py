@@ -4,13 +4,22 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.views import APIView
 
-from rest_framework import mixins
+# from rest_framework import mixins
 from rest_framework import generics
 
 from movielist_app.models import WatchList , StreamPlatform , Review
 from movielist_app.api.serializers import WatchListSerializer , StreamPlatformSerializer,ReviewSerializer
 
-class ReviewDetail(mixins.RetrieveModelMixin, generics.GenericAPIView):
+class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+class ReviewList(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+
+""" class ReviewDetail(mixins.RetrieveModelMixin, generics.GenericAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
@@ -26,7 +35,7 @@ class ReviewList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Generi
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+        return self.create(request, *args, **kwargs) """
 
 class StreamPlatformListAV(APIView):
 
@@ -172,5 +181,10 @@ it implements creating and saving a new model instance
 
 5. 'generics.GenericAPIView' is used for building the 2 
 NOTE: The the mixins subclasses go in hand with the 'generics.GenericAPIView'
+
+LINKS: https://www.django-rest-framework.org/tutorial/3-class-based-views/#using-generic-class-based-views ,
+https://www.django-rest-framework.org/api-guide/generic-views/#concrete-view-classes
+6. The Concrete View Classes (i.e using the generics only) are inherited from the 'mixins' Classes.
+READ MORE: https://github.com/encode/django-rest-framework/blob/master/rest_framework/generics.py
 
 """
