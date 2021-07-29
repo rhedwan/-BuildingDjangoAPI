@@ -1,11 +1,25 @@
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from movielist_app.models import WatchList , StreamPlatform
-from movielist_app.api.serializers import WatchListSerializer , StreamPlatformSerializer
 from rest_framework import status
-
 from rest_framework.views import APIView
+
+from rest_framework import mixins
+from rest_framework import generics
+
+from movielist_app.models import WatchList , StreamPlatform , Review
+from movielist_app.api.serializers import WatchListSerializer , StreamPlatformSerializer,ReviewSerializer
+
+class ReviewList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 class StreamPlatformListAV(APIView):
 
@@ -143,4 +157,11 @@ def movie_details(request, pk):
 else a new model get created.
 2. The data we are using after checking it "is_vald()" is from the return statement
 in create method in the MovieSerializer
+
+LINKS: https://www.django-rest-framework.org/api-guide/generic-views/#listmodelmixin
+3. 'mixins.ListModelMixin' is similar to the 'get request'
+4. 'mixins.CreateModelMixin' is similar to the 'create request' i.e 
+it implements creating and saving a new model instance
+
+5. 'generics.GenericAPIView' is used for building the 2 
 """

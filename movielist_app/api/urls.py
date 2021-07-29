@@ -3,7 +3,7 @@ from django.urls.conf import path
 # NB: function based view
 # from movielist_app.api.views import movie_list, movie_details
 
-from movielist_app.api.views import WatchListAV, WatchDetailAV, StreamPlatformListAV , StreamPlatformDetailAV
+from movielist_app.api.views import WatchListAV, WatchDetailAV, StreamPlatformListAV , StreamPlatformDetailAV, ReviewList
 
 urlpatterns = [
     # path('list/', movie_list, name='movie_list'),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('<int:pk>/', WatchDetailAV.as_view(), name='movie-detail'),
     path('stream/', StreamPlatformListAV.as_view(), name='stream'),
     path('stream/<int:pk>/', StreamPlatformDetailAV.as_view(), name='streamplatform-detail'),
+    path('review/', ReviewList.as_view(), name='review'),
 ]
 
 """
