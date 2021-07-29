@@ -14,10 +14,13 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
-class ReviewList(generics.ListCreateAPIView):
-    queryset = Review.objects.all()
+class ReviewList(generics.ListAPIView):
+    # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Review.objects.filter(watchlist=pk)
 
 """ class ReviewDetail(mixins.RetrieveModelMixin, generics.GenericAPIView):
     queryset = Review.objects.all()

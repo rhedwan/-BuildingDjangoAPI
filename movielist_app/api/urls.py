@@ -12,10 +12,14 @@ urlpatterns = [
     path('<int:pk>/', WatchDetailAV.as_view(), name='movie-detail'),
     path('stream/', StreamPlatformListAV.as_view(), name='stream'),
     path('stream/<int:pk>/', StreamPlatformDetailAV.as_view(), name='streamplatform-detail'),
-    path('review/', ReviewList.as_view(), name='review'),
-    path('review/<int:pk>/', ReviewDetail.as_view(), name='review-detail'),
-]
+    
+    # path('review/', ReviewList.as_view(), name='review'),
+    # path('review/<int:pk>/', ReviewDetail.as_view(), name='review-detail'),
 
+    path('stream/<int:pk>/review/', ReviewList.as_view(), name='review-list'),
+    path('stream/review/<int:pk>/', ReviewDetail.as_view(), name='review-detail'),  
+]
+ 
 """
 
 LINKS: https://www.django-rest-framework.org/api-guide/serializers/#hyperlinkedmodelserializer
