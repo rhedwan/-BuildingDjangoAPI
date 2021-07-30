@@ -48,7 +48,7 @@ class ReviewList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Generi
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs) """
 
-class StreamPlatformVS(viewsets.ModelViewSet):
+class StreamPlatformVS(viewsets.ReadOnlyModelViewSet):
     queryset = StreamPlatform.objects.all()
     serializer_class = StreamPlatformSerializer
 
@@ -245,5 +245,5 @@ https://www.django-rest-framework.org/api-guide/viewsets/#viewset
 LNKS: https://github.com/encode/django-rest-framework/blob/master/rest_framework/viewsets.py
 10. The 'ModelViewSet' also inherits from the 'Mixins and generics class.
 It provides flexibilty over the 'ViewSet' class. Because it provide a the methods.
-
+11. 'ReadOnlyModelViewSet' allows only the 'GET' method for listing and retrival of objects.
 """
