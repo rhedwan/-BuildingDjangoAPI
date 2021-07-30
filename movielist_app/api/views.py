@@ -48,7 +48,11 @@ class ReviewList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Generi
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs) """
 
-class StreamPlatformVS(viewsets.ViewSet):
+class StreamPlatformVS(viewsets.ModelViewSet):
+    queryset = StreamPlatform.objects.all()
+    serializer_class = StreamPlatformSerializer
+
+""" class StreamPlatformVS(viewsets.ViewSet):
 
     def list(self, request):
         queryset = StreamPlatform.objects.all()
@@ -68,7 +72,7 @@ class StreamPlatformVS(viewsets.ViewSet):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
-
+ """
 
 class StreamPlatformListAV(APIView):
 
@@ -235,5 +239,11 @@ LINKS: https://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/,
 https://www.django-rest-framework.org/api-guide/viewsets/#viewset
 
 9. The 'ViewSets & Routers' saves a lot of energy by creating our urls for us automatically. Depending on the methods available in it.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ModelViewSet  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+LNKS: https://github.com/encode/django-rest-framework/blob/master/rest_framework/viewsets.py
+10. The 'ModelViewSet' also inherits from the 'Mixins and generics class.
+It provides flexibilty over the 'ViewSet' class. Because it provide a the methods.
 
 """
