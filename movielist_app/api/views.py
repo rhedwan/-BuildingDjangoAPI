@@ -267,4 +267,11 @@ It provides flexibilty over the 'ViewSet' class. Because it provide a the method
 16. 'review_queryset.exists() is used for checking if it exists.
 17. 'get_queryset' method is used for getting current instance of the review back. When the 'POST" method is made.
 
+
+LINKS: https://www.django-rest-framework.org/api-guide/permissions/#api-reference
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PERMISSION  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+18. 'The projects-level-permission' is for the entire view in the projects.
+19. 'Object level permissions' is for each of view class or functions.
+
 """
