@@ -9,6 +9,7 @@ from rest_framework import generics
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated ,IsAuthenticatedOrReadOnly
 
 from movielist_app.models import WatchList , StreamPlatform , Review
 from movielist_app.api.serializers import WatchListSerializer , StreamPlatformSerializer,ReviewSerializer
@@ -33,10 +34,13 @@ class ReviewCreate(generics.CreateAPIView):
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
 
 class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         pk = self.kwargs['pk']
@@ -267,10 +271,10 @@ It provides flexibilty over the 'ViewSet' class. Because it provide a the method
 16. 'review_queryset.exists() is used for checking if it exists.
 17. 'get_queryset' method is used for getting current instance of the review back. When the 'POST" method is made.
 
-
-LINKS: https://www.django-rest-framework.org/api-guide/permissions/#api-reference
-
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PERMISSION  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+LINKS: https://www.django-rest-framework.org/api-guide/permissions/#api-reference,
+https://www.django-rest-framework.org/api-guide/permissions/#setting-the-permission-policy
+
 18. 'The projects-level-permission' is for the entire view in the projects.
 19. 'Object level permissions' is for each of view class or functions.
 
