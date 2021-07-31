@@ -1,10 +1,11 @@
 from rest_framework.authtoken.views import obtain_auth_token
 from django.urls import path
-from user_app.api.views import registration_view
+from user_app.api.views import registration_view, logout_view
 
 urlpatterns = [
     path('login/', obtain_auth_token, name='login'),
     path('register/', registration_view, name='register'),
+    path('logout/', logout_view, name='logout'),
 ]
 
 """
@@ -16,4 +17,5 @@ For example: when making the a 'POST' request i.e(http://127.0.0.1:8000/watch/3/
 The token needs to be passed on the 'headers' as a 'key and value pair'.
 i.e {'Authorization' : 'Token fead1ec9fcfb40dce5b8717c3f684c41a974e884'}
 
+3.  The 'logout' endpoint get destroys as soon as the request is made.
 """
