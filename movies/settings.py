@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'movielist_app',
-
+    'user_app',
+    
     'rest_framework',
     # TokenAuthentication
     'rest_framework.authtoken'
