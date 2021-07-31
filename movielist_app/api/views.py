@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated ,IsAuthenticatedOrReadOnly
 
+from movielist_app.api.permissions import AdminOrReadOnly , ReviewUserOrReadOnly
 from movielist_app.models import WatchList , StreamPlatform , Review
 from movielist_app.api.serializers import WatchListSerializer , StreamPlatformSerializer,ReviewSerializer
 
@@ -34,7 +35,7 @@ class ReviewCreate(generics.CreateAPIView):
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [ReviewUserOrReadOnly]
 
 
 class ReviewList(generics.ListAPIView):
