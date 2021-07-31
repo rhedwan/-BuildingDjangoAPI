@@ -9,4 +9,9 @@ LINKS: https://www.base64encode.org/
 The username and password needs to be encode when using "POSTMAN". It gives an alert modal
 for the "Browsable API".
 
+<<<<<<<<<<<<<<<< TokenAuthentication >>>>>>>>>>>>>>>>
+LINKS: https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
+Made migrate for tables to be created for 'token' in the database. Also added the 'token'
+manually for the registered users to avoid rewrting the 'database'.
+
 """
