@@ -23,7 +23,7 @@ class IsReviewUserOrReadOnly(permissions.BasePermission):
             return True
         else:
             # Check permissions for write request
-            return obj.review_user == request.user
+            return obj.review_user == request.user or request.user.is_staff
 
 """
 LINKS: https://github.com/encode/django-rest-framework/blob/master/rest_framework/permissions.py
@@ -37,5 +37,6 @@ allowed for all other 'User'.
 5. '.has_object_permission(self, request, view, obj)' is for checking the if the user accessing the
 view was the author i.e creator. Making the user able to have access to 'editing' and the like.
 
+6. "request.user.is_staff" is for allowing the 'admin' to make some changes on the review
 ['GET' ,'PUT','PATCH', 'PUT', 'DELETE']
 """
