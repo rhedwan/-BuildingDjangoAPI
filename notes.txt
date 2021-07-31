@@ -2,3 +2,11 @@
 2. 'PUT' request means updating for ALL field available
 3. 'PACHT' request means updating for ONLY ONE field available
 4. 
+
+""" 
+<<<<<<<<<<<<<<<< BasicAuthentication >>>>>>>>>>>>>>>>
+LINKS: https://www.base64encode.org/ 
+The username and password needs to be encode when using "POSTMAN". It gives an alert modal
+for the "Browsable API".
+
+"""
