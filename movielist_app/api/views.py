@@ -10,7 +10,7 @@ from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated ,IsAuthenticatedOrReadOnly
-from rest_framework.throttling import UserRateThrottle ,AnonRateThrottle
+from rest_framework.throttling import UserRateThrottle ,AnonRateThrottle, ScopedRateThrottle
 
 from movielist_app.api.permissions import IsAdminOrReadOnly , IsReviewUserOrReadOnly
 from movielist_app.models import WatchList , StreamPlatform , Review
@@ -49,6 +49,8 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = [IsReviewUserOrReadOnly]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'review-detail'
 
 class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
