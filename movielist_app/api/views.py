@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated ,IsAuthenticatedOrReadOnly
 from rest_framework.throttling import UserRateThrottle ,AnonRateThrottle, ScopedRateThrottle
+from django_filters.rest_framework import DjangoFilterBackend
 
 from movielist_app.api.permissions import IsAdminOrReadOnly , IsReviewUserOrReadOnly
 from movielist_app.models import WatchList , StreamPlatform , Review
@@ -70,6 +71,8 @@ class ReviewList(generics.ListAPIView):
     serializer_class = ReviewSerializer
     # permission_classes = [IsAuthenticated]
     throttle_classes = [ReviewListThrottle ,AnonRateThrottle]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['review_user__username', 'active']
 
     def get_queryset(self):
         pk = self.kwargs['pk']
@@ -320,4 +323,13 @@ https://www.django-rest-framework.org/api-guide/filtering/#filtering-against-the
 
 20. The "__username" in "review_user__username" is because it a "ForeignKey" relationship.
 Else it wouldn't be there
+
+<<<<<<<<<<<<<<<<<<<< Django-filter >>>>>>>>>>>>>>>>>>>>>>>
+NOTE: Django-filtering will only work on Generics Views
+LINKS: https://django-filter.readthedocs.io/en/stable/guide/install.html,
+https://www.django-rest-framework.org/api-guide/filtering/#djangofilterbackend
+21. 'filterset_fields' is an attribute for the fields which we want to allow filter on
+the search.
+22. The 'filter' value are passed on 'POSTMAN' parameter sections
+
 """
