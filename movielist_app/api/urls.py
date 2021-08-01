@@ -27,7 +27,8 @@ urlpatterns = [
     path('<int:pk>/review-create/', ReviewCreate.as_view(), name='review-create'),
     path('<int:pk>/reviews/', ReviewList.as_view(), name='review-list'),
     path('review/<int:pk>/', ReviewDetail.as_view(), name='review-detail'),  
-    path('reviews/<str:username>/', UserReview.as_view(), name='user-review-detail'),  
+    path('reviews/', UserReview.as_view(), name='user-review-detail'),  
+    
 ]
  
 """
@@ -38,4 +39,11 @@ By default hyperlinks are expected to correspond to a view name that matches the
 '{model_name}-detail', and looks up the instance by a pk keyword argument. 
 HENCE: Our model name was 'streamplatform'. That why it now 'streamplatform-detail'
 
+<<<<<<<<<<<<<<<<<<<< Filtering against the URL >>>>>>>>>>>>>>>>>>>>>>>
+Here is the 'urlpatterns' when using the 'url filter'
+path('reviews/<str:username>/', UserReview.as_view(), name='user-review-detail'),
+
+<<<<<<<<<<<<<<<<<<<< Filtering against query parameters >>>>>>>>>>>>>>>>>>>>>>>
+The 'username' i.e the parameter is passed: goto parameter then, 'username' and it 'value' 
+E.g 'username' and 'admin'
 """
