@@ -169,8 +169,8 @@ class StreamPlatformDetailAV(APIView):
 class WatchList(generics.ListAPIView):
     queryset = WatchList.objects.all()
     serializer_class = WatchListSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'platform__name']
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['avg_rating']
 
 class WatchListAV(APIView):
     permission_classes = [IsAdminOrReadOnly]
@@ -346,5 +346,10 @@ LINKS:https://www.django-rest-framework.org/api-guide/filtering/#searchfilter
 Testing Endpoints: http://127.0.0.1:8000/watch/list2/?search=pyth
 24. 'search_fields' is an attribute for the fields which we want to allow search-filter on
 25. NOTE: The 'search' actually checks for related match. i.e 'pyth' can be 'The Python 2 vs Python 3' 
+
+Testing Endpoints: http://127.0.0.1:8000/watch/list2/?ordering=avg_rating,
+http://127.0.0.1:8000/watch/list2/?ordering=-avg_rating
+24. 'ordering_fields' is an attribute for the fields which we want to allow order-filter on
+25. NOTE: It goes in acsending orders.
 
 """
