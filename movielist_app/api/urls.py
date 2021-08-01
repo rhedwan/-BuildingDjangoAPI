@@ -2,7 +2,7 @@ from django.urls import include, path
 
 # NB: function based view
 # from movielist_app.api.views import movie_list, movie_details
-from movielist_app.api.views import WatchListAV, WatchDetailAV, StreamPlatformListAV , StreamPlatformDetailAV, StreamPlatformVS, ReviewList, ReviewDetail, ReviewCreate, UserReview
+from movielist_app.api.views import WatchListAV, WatchDetailAV, StreamPlatformListAV , StreamPlatformDetailAV, StreamPlatformVS, ReviewList, ReviewDetail, ReviewCreate, UserReview, WatchList
 
 from rest_framework.routers import DefaultRouter
 
@@ -15,6 +15,7 @@ urlpatterns = [
     # path('<int:pk>/', movie_details, name='movie_detail'),
     path('list/', WatchListAV.as_view(), name='movie-list'),
     path('<int:pk>/', WatchDetailAV.as_view(), name='movie-detail'),
+    path('list2/', WatchList.as_view(), name='watch-list'),
 
     path('', include(router.urls)),
 

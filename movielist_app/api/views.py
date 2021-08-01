@@ -165,6 +165,11 @@ class StreamPlatformDetailAV(APIView):
         platform.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class WatchList(generics.ListAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = WatchListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['title', 'platform__name']
 
 class WatchListAV(APIView):
     permission_classes = [IsAdminOrReadOnly]
@@ -332,4 +337,5 @@ https://www.django-rest-framework.org/api-guide/filtering/#djangofilterbackend
 the search.
 22. The 'filter' value are passed on 'POSTMAN' parameter sections
 
+23. NOTE: The 'filter' actually checks for exact match. i.e 'The Python 2 vs Python 3' == 'The Python 2 vs Python 3' 
 """
