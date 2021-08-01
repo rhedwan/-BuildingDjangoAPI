@@ -1,4 +1,4 @@
-from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
+from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination, CursorPagination
 
 class WatchListPagination(PageNumberPagination):
     page_size = 5
@@ -13,6 +13,10 @@ class WatchListLOPagination(LimitOffsetPagination):
     limit_query_param = 'limit'
     offset_query_param = 'startfrom'
 
+class WatchListCPagination(CursorPagination):
+    page_size = 5
+    ordering = '-created'
+    cursor_query_param = 'record'
 
 """
 <<<<<<<<<<<<<<<<<<<<< PageNumberPagination >>>>>>>>>>>>>>>>>>>>>>
@@ -42,5 +46,11 @@ NOTE:'limit' is basically 'page size'
     If offset = 10. It means we will skip first 10 elements and load result from 11
     Also, if limit = 10 and offset = 2:
     It means load 10 objects after the 2nd objects.
+
+
+<<<<<<<<<<<<<<<<<<<<<<<< CursorPagination >>>>>>>>>>>>>>>>>>>>>>>>>
+LINKS: https://www.django-rest-framework.org/api-guide/pagination/#cursorpagination,
+
+'-created' gives old to new
 
 """
