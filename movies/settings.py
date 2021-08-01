@@ -140,13 +140,13 @@ REST_FRAMEWORK = {
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 
-    'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
-    ],
+    # 'DEFAULT_THROTTLE_CLASSES': [
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '1/day',
-        'user': '3/day'
+        'anon': '5/day',
+        'user': '10/day'
     }
 }
 
@@ -161,5 +161,6 @@ The 'SIMPLE_JWT':
 
 <<<<<<<<<<<<<<<<<<<<<<<<<<< Throttling >>>>>>>>>>>>>>>>>>>>>>>>
 LINKS: https://www.django-rest-framework.org/api-guide/throttling/
-
+NOTE: The requests are counted together regardless of the endpoint.
+i.e All the count could be made on a endpoint or shared with other endpoint.
 """
