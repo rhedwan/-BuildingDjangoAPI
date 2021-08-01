@@ -1,4 +1,4 @@
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
 
 class WatchListPagination(PageNumberPagination):
     page_size = 5
@@ -6,6 +6,13 @@ class WatchListPagination(PageNumberPagination):
     page_size_query_param = 'size'
     max_page_size = 10
     last_page_strings = 'end'
+
+class WatchListLOPagination(LimitOffsetPagination):
+    default_limit = 5
+    max_limit = 10
+    limit_query_param = 'limit'
+    offset_query_param = 'startfrom'
+
 
 """
 <<<<<<<<<<<<<<<<<<<<< PageNumberPagination >>>>>>>>>>>>>>>>>>>>>>
@@ -22,4 +29,18 @@ it own page size.
 passed by the clients. Hence, it overwrites the larger number passed by clients. 
 5. The 'last_page_strings' is an attribute which is used to set a string for the last-page
     NOTE: By defaults it is 'last'
+
+
+<<<<<<<<<<<<<<<<<<<< LimitOffsetPagination >>>>>>>>>>>>>>>>>>>>>
+LINKS: https://www.django-rest-framework.org/api-guide/pagination/#limitoffsetpagination,
+https://www.django-rest-framework.org/api-guide/pagination/#configuration_1
+
+    ------------- Overwriting Of Default Attributes ------------------
+
+NOTE:'limit' is basically 'page size'
+    'offset' is simply the number of records you wish to skip before selecting records. i.e 
+    If offset = 10. It means we will skip first 10 elements and load result from 11
+    Also, if limit = 10 and offset = 2:
+    It means load 10 objects after the 2nd objects.
+
 """
