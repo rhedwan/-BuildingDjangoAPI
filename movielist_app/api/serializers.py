@@ -13,7 +13,8 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class WatchListSerializer(serializers.ModelSerializer):
 
-    reviews = ReviewSerializer(many=True, read_only=True)
+    # reviews = ReviewSerializer(many=True, read_only=True)
+    platform = serializers.CharField(source= 'platform.name')
 
     class Meta:
         model = WatchList
@@ -145,4 +146,6 @@ field. It for getting all  the reviews associated with a movie.
 21. The 'HyperlinkedModelSerializer'  was removed because it going to cause laoding issues if the 'context={'request': request}'
 is not passed on instantiating the 'serializers class' in the 'views class'
 
+22. The 'platform' in 'WatchListSerializer' was made to return the name of the platform that has the movie not the 'id'.
+23. The 'review' was commeted to reduce scrolling on viewing
 """
