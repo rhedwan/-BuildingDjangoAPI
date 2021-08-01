@@ -12,6 +12,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated ,IsAuthenticatedOrReadOnly
 from rest_framework.throttling import UserRateThrottle ,AnonRateThrottle, ScopedRateThrottle
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 from movielist_app.api.permissions import IsAdminOrReadOnly , IsReviewUserOrReadOnly
 from movielist_app.models import WatchList , StreamPlatform , Review
@@ -168,8 +169,8 @@ class StreamPlatformDetailAV(APIView):
 class WatchList(generics.ListAPIView):
     queryset = WatchList.objects.all()
     serializer_class = WatchListSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['title', 'platform__name']
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'platform__name']
 
 class WatchListAV(APIView):
     permission_classes = [IsAdminOrReadOnly]
@@ -338,4 +339,12 @@ the search.
 22. The 'filter' value are passed on 'POSTMAN' parameter sections
 
 23. NOTE: The 'filter' actually checks for exact match. i.e 'The Python 2 vs Python 3' == 'The Python 2 vs Python 3' 
+
+<<<<<<<<<<<<<<<<<<<< Search Filtering >>>>>>>>>>>>>>>>>>>>>>>
+LINKS:https://www.django-rest-framework.org/api-guide/filtering/#searchfilter
+
+Testing Endpoints: http://127.0.0.1:8000/watch/list2/?search=pyth
+24. 'search_fields' is an attribute for the fields which we want to allow search-filter on
+25. NOTE: The 'search' actually checks for related match. i.e 'pyth' can be 'The Python 2 vs Python 3' 
+
 """
