@@ -151,7 +151,9 @@ REST_FRAMEWORK = {
         'review-create': '1/day',
         'review-list': '10/day',
         'review-detail': '2/day',
-    }
+    },
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 5,
 }
 
 SIMPLE_JWT = {
@@ -167,4 +169,9 @@ The 'SIMPLE_JWT':
 LINKS: https://www.django-rest-framework.org/api-guide/throttling/
 NOTE: The requests are counted together regardless of the endpoint.
 i.e All the count could be made on a endpoint or shared with other endpoint.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<< Paginations >>>>>>>>>>>>>>>>>>>>>>>>
+LINKS : https://www.django-rest-framework.org/api-guide/pagination/#setting-the-pagination-style
+NOTE: 'pagination' is supported on 'mixins.ListModelMixin and generics.GenericAPIView classes'
+
 """
