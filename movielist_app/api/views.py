@@ -17,6 +17,15 @@ from movielist_app.models import WatchList , StreamPlatform , Review
 from movielist_app.api.serializers import WatchListSerializer , StreamPlatformSerializer,ReviewSerializer
 from movielist_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
 
+class UserReview(generics.ListAPIView):
+    serializer_class = ReviewSerializer
+    # permission_classes = [IsAuthenticated]
+    # throttle_classes = [ReviewListThrottle ,AnonRateThrottle]
+
+    def get_queryset(self):
+        username = self.kwargs['username']
+        return Review.objects.filter(review_user__username=username)
+
 class ReviewCreate(generics.CreateAPIView):
     serializer_class = ReviewSerializer
     permission_classes = [IsAuthenticated]
@@ -301,4 +310,10 @@ https://www.django-rest-framework.org/api-guide/permissions/#setting-the-permiss
 18. 'The projects-level-permission' is for the entire view in the projects.
 19. 'Object level permissions' is for each of view class or functions.
 
+<<<<<<<<<<<<<<<<<<<< Filtering against the URL >>>>>>>>>>>>>>>>>>>>>>>
+LINKS: https://www.django-rest-framework.org/api-guide/filtering/,
+https://www.django-rest-framework.org/api-guide/filtering/#filtering-against-the-url,
+
+20. The "__username" in "review_user__username" is because it a "ForeignKey" relationship.
+Else it wouldn't be there
 """
