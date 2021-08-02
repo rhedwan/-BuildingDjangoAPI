@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.http import response
 from django.urls import reverse
 
 from rest_framework import status
@@ -19,8 +20,25 @@ class RegisterTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
+class LoginLogoutTestCase(APITestCase):
 
+    def setUp(self):
+        self.user = User.objects.create_user(username = "example", password="NewPassword@123")
 
+    def test_login(self):
+        data = {
+            "username": "example",
+            "password": "NewPassword@123"
+        }
+    
+        response = self.client.post(reverse('login'), data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_logout(self):
+        self.token = Token.objects.get(user__username = "example")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        response = self.client.post(reverse('logout'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 """  
@@ -36,5 +54,9 @@ https://github.com/encode/django-rest-framework/blob/master/rest_framework/test.
     in given class. 
 6. The 'self.client.post(reverse('register'), data)' returns a response. Which can be stored
 7. NOTE: The "self.assertEqual" is for checking if there are equal
+
+LINKS : https://www.django-rest-framework.org/api-guide/status-codes/
+
 8. NOTE: By default it returns "status.HTTP_200_OK"
+9. NOTE: If the 'password or username' isn't correct it returns "HTTP_400_BAD_REQUEST" (i.e the response returns that)
 """
