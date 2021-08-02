@@ -121,6 +121,19 @@ class ReviewTestCase(APITestCase):
         response = self.client.post(reverse('review-create', args=(self.watchlist.id,)), data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
     
+    def test_review_create_unath(self):
+        data = {
+            "review_user": self.user ,
+            "rating " : 5,
+            "description" : "Great Movie!!!",
+            "watchlist" : self.watchlist,
+            "active" : True
+        }
+
+        self.client.force_authenticate(user=None)
+        response = self.client.post(reverse('review-create', args=(self.watchlist.id,)), data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
 
 """
     IMPORTANT: The we are using the 'user' which isn't the 'admin'. Hence
@@ -145,5 +158,8 @@ NOTE: "test_streamplatform_ind" method is  for getting the individual object
 2. "self.watchlist" is attribute in the "setUp" for creating the "watchlist" object
     manually.
 
-3. 
+    ----------------------- Forcing authentication-------------------------
+    LINKS: https://www.django-rest-framework.org/api-guide/testing/#forcing-authentication
+
+3. We are "Forcing authentication" to login as anonymous
 """
