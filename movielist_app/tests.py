@@ -102,6 +102,21 @@ class ReviewTestCase(APITestCase):
             active = True
         )
 
+        self.watchlist2 = models.WatchList.objects.create(
+            title = "Example Movie" ,
+            storyline = "Example Story",
+            platform = self.stream ,
+            active = True
+        )
+
+        self.review = models.Review.objects.create(
+            review_user =self.user ,
+            rating  = 5,
+            description = "Great Movie!!!",
+            watchlist = self.watchlist2,
+            active  = True
+        )
+
     def test_review_create(self):
         data = {
             "review_user": self.user ,
@@ -115,13 +130,12 @@ class ReviewTestCase(APITestCase):
 
         # Added more checks to the tests. i.c(For the content and
         #  the number of reviews that can be created on a movie)
-        self.assertEqual(models.Review.objects.count(), 1)
-        self.assertEqual(models.Review.objects.get().rating, 5)
+        self.assertEqual(models.Review.objects.count(), 2)
 
         response = self.client.post(reverse('review-create', args=(self.watchlist.id,)), data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
     
-    def test_review_create_unath(self):
+    def test_review_create_unauth(self):
         data = {
             "review_user": self.user ,
             "rating " : 5,
@@ -133,6 +147,17 @@ class ReviewTestCase(APITestCase):
         self.client.force_authenticate(user=None)
         response = self.client.post(reverse('review-create', args=(self.watchlist.id,)), data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_review_create_update(self):
+        data = {
+            "review_user": self.user ,
+            "rating " : 4,
+            "description" : "Great Movie!!!-(Updated)",
+            "watchlist" : self.watchlist,
+            "active" : False
+        }
+        response = self.client.put(reverse('review-detail', args=(self.review.id,)), data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 """
@@ -162,4 +187,9 @@ NOTE: "test_streamplatform_ind" method is  for getting the individual object
     LINKS: https://www.django-rest-framework.org/api-guide/testing/#forcing-authentication
 
 3. We are "Forcing authentication" to login as anonymous
+4. Created a "self.watchlist" attribute to get an id for the review to be updated.
+    NOTE: The 2 'self.watchlist' i.e('self.watchlist & self.watchlist2') was created because
+     we aren't allowed to send multilpe review on a watchlist. 
+     The first is used to test the "test_review_create and test_review_create_unauth"
+    While, the second is used to for the update, "PUT"
 """
