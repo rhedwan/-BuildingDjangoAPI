@@ -113,6 +113,14 @@ class ReviewTestCase(APITestCase):
         response = self.client.post(reverse('review-create', args=(self.watchlist.id,)), data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+        # Added more checks to the tests. i.c(For the content and
+        #  the number of reviews that can be created on a movie)
+        self.assertEqual(models.Review.objects.count(), 1)
+        self.assertEqual(models.Review.objects.get().rating, 5)
+
+        response = self.client.post(reverse('review-create', args=(self.watchlist.id,)), data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    
 
 """
     IMPORTANT: The we are using the 'user' which isn't the 'admin'. Hence
